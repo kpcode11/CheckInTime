@@ -36,7 +36,7 @@
                     <children>
                         <ButtonBar layoutY="1.0" prefHeight="41.0" prefWidth="179.0" styleClass="secondary-color" stylesheets="@../../../css/style.css">
                             <buttons>
-                                <Button alignment="BASELINE_LEFT" contentDisplay="RIGHT" minWidth="57.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="145.0" styleClass="secondary-color" text="Home" textFill="WHITE">
+                                <Button fx:id="homeButton" alignment="BASELINE_LEFT" contentDisplay="RIGHT" minWidth="57.0" mnemonicParsing="false" onAction="#goHome" prefHeight="25.0" prefWidth="145.0" styleClass="secondary-color" text="Home" textFill="WHITE">
                                     <opaqueInsets>
                                         <Insets />
                                     </opaqueInsets>
@@ -162,7 +162,7 @@
                         </ImageView>
                         <ButtonBar prefHeight="41.0" prefWidth="179.0">
                             <buttons>
-                                <Button alignment="BASELINE_LEFT" contentDisplay="RIGHT" minWidth="57.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="145.0" styleClass="secondary-color" text="Log out" textFill="WHITE">
+                                <Button alignment="BASELINE_LEFT" contentDisplay="RIGHT" minWidth="57.0" mnemonicParsing="false" onAction="#logOut" prefHeight="37.0" prefWidth="145.0" styleClass="secondary-color" text="Log out" textFill="WHITE">
                                     <opaqueInsets>
                                         <Insets />
                                     </opaqueInsets>
@@ -254,6 +254,11 @@
                </children>
             </HBox>
             <Button mnemonicParsing="false" onAction="#handleAddTask" text="Add Task" />
+            <Button fx:id="showTasksButton" mnemonicParsing="false" onAction="#showTasks" text="Show Tasks">
+               <VBox.margin>
+                  <Insets top="7.0" />
+               </VBox.margin>
+            </Button>
          </children>
       </VBox>
     </children>

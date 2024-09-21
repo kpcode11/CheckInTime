@@ -4,11 +4,13 @@ import com.example.chatgpt.DatabaseConnection;
 import com.example.chatgpt.LoginController;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -22,6 +24,65 @@ public class TaskManagerController {
 
     public void setLoggedInUsername(String username) {
         this.loggedInUsername = username;
+    }
+
+    @FXML
+    private void logOut() {
+        // Close the current window (dashboard)
+        Stage stage = (Stage) Stage.getWindows().get(0);
+        stage.close();
+
+        // Redirect to login page after logging out
+        LoginController loginController = new LoginController();
+        loginController.openLoginPage();
+    }
+
+    @FXML
+    private Button showTasksButton;  // Declare the button
+
+
+    @FXML
+    private void showTasks() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ShowTasks.fxml"));
+            Parent root = fxmlLoader.load();
+
+            // Get the controller for ShowTasks and pass the logged-in user
+            ShowTasksController showTasksController = fxmlLoader.getController();
+            showTasksController.setLoggedInUser(LoginController.loggedInUsername);  // Pass logged-in user
+
+            // Show the new page in the current window
+            Stage stage = (Stage) showTasksButton.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("User Tasks");
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @FXML
+    private Button homeButton;
+
+    @FXML
+    private void goHome() {
+        // Navigate to the Dashboard page
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Dashboard.fxml"));
+            Parent root = fxmlLoader.load();
+
+            DashboardController dashboardController = fxmlLoader.getController();
+            dashboardController.setLoggedInUsername(loggedInUsername); // Pass the logged-in user
+
+            Stage stage = (Stage) homeButton.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Dashboard");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // Linking FXML components with TaskManager.fxml
