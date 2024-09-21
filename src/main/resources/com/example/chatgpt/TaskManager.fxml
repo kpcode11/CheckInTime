@@ -238,7 +238,7 @@
             <HBox alignment="CENTER" prefHeight="40.0" prefWidth="696.0" spacing="10.0">
                <children>
                   <Label text="Task Date:" />
-                  <DatePicker fx:id="taskDatePicker" prefHeight="26.0" prefWidth="293.0" promptText="Enter time in HH:mm" />
+                  <DatePicker fx:id="taskDatePicker" prefHeight="26.0" prefWidth="293.0" promptText="Enter date" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="46.0" prefWidth="696.0" spacing="10.0">
