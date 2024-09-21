@@ -4,14 +4,15 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Font?>
 
-
-<FlowPane alignment="CENTER" hgap="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="875.0" styleClass="primary-color" stylesheets="@../../../css/style.css" vgap="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<FlowPane fx:id="tasksContainer" alignment="CENTER" hgap="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="875.0" stylesheets="@../../../css/style.css" vgap="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.chatgpt.ShowTasksController">
    <children>
-      <Label text="Your Tasks" textFill="WHITE">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <FlowPane hgap="15.0" prefHeight="200.0" prefWidth="200.0" styleClass="secondary-color" stylesheets="@../../../css/style.css" vgap="15.0" />
+      <FlowPane hgap="15.0" prefHeight="81.0" prefWidth="226.0" stylesheets="@../../../css/style.css" vgap="15.0">
+         <children>
+            <Label text="Your Tasks">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children></FlowPane>
    </children>
 </FlowPane>
