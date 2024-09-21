@@ -1,0 +1,12 @@
+.primary-color{
+    -fx-background-color: #140329
+}
+.secondary-color{
+    -fx-background-color: #281352
+}
+.third-color{
+    -fx-background-color: #3f50e7
+}
+. rect-round{
+    -fx-background-radius: 10;
+}
