@@ -4,12 +4,14 @@ public class Task {
     private String taskName;
     private String category;
     private String taskDate;
+    private String priority;
 
     // Constructor
-    public Task(String taskName, String category, String taskDate) {
+    public Task(String taskName, String category, String taskDate, String priority) {
         this.taskName = taskName;
         this.category = category;
         this.taskDate = taskDate;
+        this.priority = priority;
     }
 
     // Getters
@@ -24,4 +26,5 @@ public class Task {
     public String getTaskDate() {
         return taskDate;
     }
+    public String getPriority() {return priority;}
 }

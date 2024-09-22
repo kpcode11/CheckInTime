@@ -101,6 +101,9 @@ public class TaskManagerController {
     @FXML
     private ComboBox<String> reminderComboBox;
 
+    @FXML
+    private ComboBox<String> priorityComboBox;
+
     // Method to show alerts
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
@@ -123,6 +126,9 @@ public class TaskManagerController {
                 "2 Hours Before",
                 "1 Day Before"
         ));
+
+        // Add items to the priority ComboBox
+        priorityComboBox.setItems(FXCollections.observableArrayList("High", "Medium", "Low"));
     }
     @FXML
     private void handleAddTask() {
@@ -132,6 +138,7 @@ public class TaskManagerController {
         LocalDate taskDate = taskDatePicker.getValue();
         String taskTime = taskTimeField.getText();
         String reminder = reminderComboBox.getValue();
+        String selectedPriority = priorityComboBox.getValue();
 
         // Check for required fields
         if (taskName.isEmpty() || category == null || taskDate == null || taskTime.isEmpty()) {
@@ -156,11 +163,11 @@ public class TaskManagerController {
         }
 
         // SQL query to insert task
-        String insertTaskQuery = "INSERT INTO tasks (username, task_name, category, task_date, task_time, reminder) VALUES (?, ?, ?, ?, ?, ?)";
+        String insertTaskQuery = "INSERT INTO tasks (username, task_name, category, task_date, task_time, reminder,priority) VALUES (?, ?, ?, ?, ?, ?,?)";
 
         // Execute database query
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement("INSERT INTO tasks (username, task_name, category, task_date, task_time, reminder) VALUES (?, ?, ?, ?, ?, ?)")) {
+             PreparedStatement stmt = conn.prepareStatement("INSERT INTO tasks (username, task_name, category, task_date, task_time, reminder,priority) VALUES (?, ?, ?, ?, ?, ?,?)")) {
 
             // Set query parameters
             stmt.setString(1, loggedInUser);
@@ -169,6 +176,7 @@ public class TaskManagerController {
             stmt.setDate(4, java.sql.Date.valueOf(taskDate));
             stmt.setString(5, taskTime);
             stmt.setString(6, reminder != null ? reminder : "No Reminder");
+            stmt.setString(7, selectedPriority);
 
             // Execute the update
             stmt.executeUpdate();

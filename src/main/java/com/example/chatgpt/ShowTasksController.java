@@ -1,11 +1,17 @@
 package com.example.chatgpt;
 
+import javafx.event.ActionEvent;  // Correct import for JavaFX
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -47,6 +53,21 @@ public class ShowTasksController {
         rectangle.setArcHeight(20);
         rectangle.setFill(Color.LIGHTBLUE);
 
+        // Set the background color based on the task priority
+        switch (task.getPriority()) {
+            case "High":
+                rectangle.setFill(Color.RED);  // Red for High priority
+                break;
+            case "Medium":
+                rectangle.setFill(Color.YELLOW);  // Yellow for Medium priority
+                break;
+            case "Low":
+                rectangle.setFill(Color.GREEN);  // Green for Low priority
+                break;
+            default:
+                rectangle.setFill(Color.LIGHTGRAY);  // Default color
+        }
+
         // Task name and details
         Text taskText = new Text(task.getTaskName() + "\n" + task.getCategory() + "\n" + task.getTaskDate());
         taskText.setStyle("-fx-font-size: 12px;");
@@ -58,7 +79,7 @@ public class ShowTasksController {
     // Fetch tasks from the database for the logged-in user
     private List<Task> getUserTasksFromDatabase() {
         List<Task> tasks = new ArrayList<>();
-        String query = "SELECT task_name, category, task_date FROM tasks WHERE username = ?";
+        String query = "SELECT task_name, category, task_date, priority FROM tasks WHERE username = ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -70,13 +91,32 @@ public class ShowTasksController {
                 String taskName = rs.getString("task_name");
                 String category = rs.getString("category");
                 String taskDate = rs.getString("task_date");
+                String priority = rs.getString("priority");
 
-                tasks.add(new Task(taskName, category, taskDate));  // Add each task to the list
+                tasks.add(new Task(taskName, category, taskDate, priority));  // Add each task to the list
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return tasks;
+    }
+
+    // Method to redirect to the Task Manager page
+    @FXML
+    private void redirectToTaskManager(ActionEvent event) {
+        try {
+            // Load the TaskManager FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("TaskManager.fxml"));
+            Parent taskManagerRoot = loader.load();
+
+            // Get the current stage (window) and set the TaskManager scene
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.setScene(new Scene(taskManagerRoot));
+            currentStage.setTitle("Task Manager");
+            currentStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
