@@ -18,7 +18,23 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+
 public class TaskManagerController {
+
+
+    @FXML
+    private Button taskManagerButton;
+    // Method to show an alert for the Task Manager section
+    @FXML
+    private void showTaskManagerAlert() {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Task Manager");
+        alert.setHeaderText(null);
+        alert.setContentText("This is the Task Manager section.");
+        alert.showAndWait();
+    }
 
     private String loggedInUsername;
 
