@@ -129,7 +129,7 @@
                   </ImageView>
                   <ButtonBar prefHeight="41.0" prefWidth="179.0">
                      <buttons>
-                        <Button alignment="BASELINE_LEFT" contentDisplay="RIGHT" minWidth="57.0" mnemonicParsing="false" onAction="#openPerformance" prefHeight="32.0" prefWidth="145.0" styleClass="secondary-color" text="Performance" textFill="WHITE">
+                        <Button alignment="BASELINE_LEFT" contentDisplay="RIGHT" minWidth="57.0" mnemonicParsing="false" onAction="#goToPerformanceSection" prefHeight="32.0" prefWidth="145.0" styleClass="secondary-color" text="Performance" textFill="WHITE">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>

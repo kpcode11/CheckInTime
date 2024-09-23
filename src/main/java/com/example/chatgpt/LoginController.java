@@ -17,6 +17,17 @@ import java.sql.ResultSet;
 
 public class LoginController {
 
+    // In your login controller
+    public void handleLogin() {
+        // After successful login
+        String username = usernameField.getText(); // Get username from the input field
+        FXMLLoader loader = null;
+        SubjectsController subjectsController = loader.getController();
+        subjectsController.setLoggedInUser(username);
+        // Load the Subjects.fxml scene
+    }
+
+
     public static String loggedInUsername;
     @FXML
     private TextField usernameField;
