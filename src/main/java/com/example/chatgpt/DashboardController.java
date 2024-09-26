@@ -23,7 +23,7 @@ public class DashboardController {
 
             // Pass the logged-in user to SubjectsController (optional, if needed)
             SubjectsController subjectsController = loader.getController();
-            subjectsController.setLoggedInUser("loggedInUsername");  // You can replace "loggedInUsername" with the actual username
+            subjectsController.setLoggedInUser(loggedInUsername);  // You can replace "loggedInUsername" with the actual username
 
             // Get the current stage (window) and set the new scene
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
