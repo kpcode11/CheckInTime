@@ -131,7 +131,7 @@
                         </ImageView>
                         <ButtonBar prefHeight="41.0" prefWidth="179.0">
                             <buttons>
-                                <Button alignment="BASELINE_LEFT" contentDisplay="RIGHT" minWidth="57.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="145.0" styleClass="secondary-color" text="Performance" textFill="WHITE">
+                                <Button fx:id="performanceButton" alignment="BASELINE_LEFT" contentDisplay="RIGHT" minWidth="57.0" mnemonicParsing="false" onAction="#goToPerformance" prefHeight="32.0" prefWidth="145.0" styleClass="secondary-color" text="Performance" textFill="WHITE">
                                     <opaqueInsets>
                                         <Insets />
                                     </opaqueInsets>
@@ -221,51 +221,81 @@
                 <Font name="Arial Black" size="24.0" />
             </font>
         </Label>
-      <VBox alignment="CENTER" layoutX="180.0" layoutY="59.0" prefHeight="391.0" prefWidth="696.0" style="-fx-background-color: white;">
+      <VBox alignment="CENTER" layoutX="180.0" layoutY="59.0" prefHeight="391.0" prefWidth="696.0" style="-fx-background-color: #130328;">
          <children>
             <HBox alignment="CENTER" prefHeight="46.0" prefWidth="696.0" spacing="10.0">
                <children>
-                  <Label text="Task Name:" />
-                  <TextField fx:id="taskNameField" prefHeight="26.0" prefWidth="293.0" promptText="Enter Task Name" />
+                  <Label text="Task Name:" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Black" size="12.0" />
+                     </font></Label>
+                  <TextField fx:id="taskNameField" prefHeight="26.0" prefWidth="293.0" promptText="Enter Task Name" style="-fx-background-color: #271352; -fx-text-fill: white;" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="40.0" prefWidth="696.0" spacing="10.0">
                <children>
-                  <Label text="Category:" />
-                  <ComboBox fx:id="categoryComboBox" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="293.0" />
+                  <Label text="Category:" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Black" size="12.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="categoryComboBox" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="293.0" style="-fx-background-color: #271352;" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="40.0" prefWidth="696.0" spacing="10.0">
                <children>
-                  <Label text="Task Date:" />
-                  <DatePicker fx:id="taskDatePicker" prefHeight="26.0" prefWidth="293.0" promptText="Enter date" />
+                  <Label text="Task Date:" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Black" size="12.0" />
+                     </font>
+                  </Label>
+                  <DatePicker fx:id="taskDatePicker" prefHeight="26.0" prefWidth="293.0" promptText="Enter date" style="-fx-background-color: #271352;" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="46.0" prefWidth="696.0" spacing="10.0">
                <children>
-                  <Label text="Task Time:" />
-                  <TextField fx:id="taskTimeField" prefHeight="26.0" prefWidth="293.0" promptText="Enter time in HH:mm" />
+                  <Label text="Task Time:" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Black" size="12.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="taskTimeField" prefHeight="26.0" prefWidth="293.0" promptText="Enter time in HH:mm" style="-fx-background-color: #271352; -fx-text-fill: white;" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="46.0" prefWidth="696.0" spacing="10.0">
                <children>
-                  <Label text="Priority:" />
-                  <ComboBox fx:id="priorityComboBox" prefHeight="26.0" prefWidth="293.0" />
+                  <Label text="Priority:" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Black" size="12.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="priorityComboBox" prefHeight="26.0" prefWidth="293.0" style="-fx-background-color: #271352;" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="40.0" prefWidth="696.0" spacing="10.0">
                <children>
-                  <Label text="Reminder:" />
-                  <ComboBox fx:id="reminderComboBox" prefHeight="26.0" prefWidth="293.0" />
+                  <Label text="Reminder:" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Black" size="12.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="reminderComboBox" prefHeight="26.0" prefWidth="293.0" style="-fx-background-color: #271352;" />
                </children>
             </HBox>
-            <Button mnemonicParsing="false" onAction="#handleAddTask" text="Add Task" />
-            <Button fx:id="showTasksButton" mnemonicParsing="false" onAction="#showTasks" text="Show Tasks">
+            <Button mnemonicParsing="false" onAction="#handleAddTask" style="-fx-background-color: #271352;" text="Add Task" textFill="WHITE">
+               <font>
+                  <Font name="Arial Black" size="12.0" />
+               </font></Button>
+            <Button fx:id="showTasksButton" mnemonicParsing="false" onAction="#showTasks" style="-fx-background-color: #271352;" text="Show Tasks" textFill="WHITE">
                <VBox.margin>
                   <Insets top="7.0" />
                </VBox.margin>
+               <font>
+                  <Font name="Arial Black" size="12.0" />
+               </font>
             </Button>
          </children>
       </VBox>
+      <Line endX="359.0" endY="7.62939453125E-6" layoutX="517.0" layoutY="59.0" startX="-337.79998779296875" startY="7.62939453125E-6" stroke="WHITE" />
     </children>
 </AnchorPane>

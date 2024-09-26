@@ -5,16 +5,14 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Font?>
 
-<FlowPane fx:id="tasksContainer" alignment="CENTER" hgap="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="875.0" stylesheets="@../../../css/style.css" vgap="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.chatgpt.ShowTasksController">
+<FlowPane fx:id="tasksContainer" alignment="CENTER" hgap="20.0" prefHeight="450.0" prefWidth="875.0" vgap="20.0" style="-fx-background-color: #f5f5f5; -fx-padding: 20;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.chatgpt.ShowTasksController">
    <children>
-      <FlowPane alignment="CENTER" hgap="15.0" prefHeight="81.0" prefWidth="226.0" stylesheets="@../../../css/style.css" vgap="15.0">
+      <FlowPane alignment="CENTER" hgap="15.0" prefHeight="81.0" prefWidth="226.0" vgap="15.0">
          <children>
-            <Label text="Your Tasks">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-         </children></FlowPane>
-      <Button mnemonicParsing="false" onAction="#redirectToTaskManager" text="Go to Task Manager" />
+            <Label text="Your Tasks" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
+         </children>
+      </FlowPane>
+
+      <Button mnemonicParsing="false" onAction="#redirectToTaskManager" text="Go to Task Manager" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 10 20; -fx-border-radius: 5; -fx-background-radius: 5;" />
    </children>
 </FlowPane>

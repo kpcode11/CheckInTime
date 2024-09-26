@@ -101,6 +101,31 @@ public class TaskManagerController {
         }
     }
 
+    @FXML
+    private Button performanceButton; // Declare the performance button
+
+    @FXML
+    private void goToPerformance() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("subjects.fxml")); // Load the subjects FXML
+            Parent root = fxmlLoader.load();
+
+            // Get the controller for Subjects and pass the logged-in user
+            SubjectsController subjectsController = fxmlLoader.getController();
+            subjectsController.setLoggedInUser(loggedInUsername); // Pass the logged-in user
+
+            // Show the new page in the current window
+            Stage stage = (Stage) performanceButton.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Subjects");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Navigation Error", "An error occurred while navigating to the Subjects page: " + e.getMessage());
+        }
+    }
+
+
     // Linking FXML components with TaskManager.fxml
     @FXML
     private TextField taskNameField;  // Text field for task name

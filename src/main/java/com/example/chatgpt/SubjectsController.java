@@ -74,11 +74,16 @@ public class SubjectsController {
         }
     }
 
-    // Method to display a subject in the UI
     private void displaySubject(Subject subject) {
         Text subjectDisplay = new Text(subject.getName() + ": " + subject.getMarks() + " marks");
+
+        // Set font and color
+        subjectDisplay.setFont(javafx.scene.text.Font.font("Arial Black", 14)); // Set font to Arial Black
+        subjectDisplay.setFill(javafx.scene.paint.Color.WHITE); // Set text color to white
+
         subjectListContainer.getChildren().add(subjectDisplay);
     }
+
 
     // Method to calculate total marks and percentage
     @FXML
