@@ -1,6 +1,7 @@
 package com.example.chatgpt;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
@@ -12,6 +13,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.chatgpt.LoginController.loggedInUsername;
 
 public class SubjectsController {
 
@@ -31,7 +34,6 @@ public class SubjectsController {
     private Label totalPercentageLabel;
 
     private String loggedInUser;  // Store the logged-in user
-
     private List<Subject> subjects = new ArrayList<>();
 
     // Set the logged-in user
@@ -47,8 +49,8 @@ public class SubjectsController {
         String marksText = marksField.getText();
 
         // Validate input values (Ensure no empty fields)
-        if (subjectName == null || subjectName.trim().isEmpty() || marksText == null || marksText.trim().isEmpty()) {
-            System.out.println("Both subject name and marks are required.");
+        if (subjectName.trim().isEmpty() || marksText.trim().isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Input Error", "Both subject name and marks are required.");
             return;
         }
 
@@ -56,7 +58,7 @@ public class SubjectsController {
             int marks = Integer.parseInt(marksText);
 
             // Add subject to the database
-            addSubjectToDatabase(subjectName, marks, loggedInUser);
+            addSubjectToDatabase(subjectName, marks, loggedInUsername);
 
             // Add subject to the list and display it in the UI
             Subject subject = new Subject(subjectName, marks);
@@ -68,7 +70,7 @@ public class SubjectsController {
             marksField.clear();
 
         } catch (NumberFormatException e) {
-            System.out.println("Marks must be a valid number.");
+            showAlert(Alert.AlertType.ERROR, "Input Error", "Marks must be a valid number.");
         }
     }
 
@@ -108,6 +110,9 @@ public class SubjectsController {
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
+            // Print the username to debug
+            System.out.println("Trying to add subject for user: " + username);
+
             stmt.setString(1, username); // Set the logged-in username
             stmt.setString(2, subjectName);
             stmt.setInt(3, marks);
@@ -117,7 +122,6 @@ public class SubjectsController {
             e.printStackTrace();
         }
     }
-
 
 
     private void loadUserSubjects() {
@@ -141,10 +145,19 @@ public class SubjectsController {
                 displaySubject(subject); // Display subjects in the UI
             }
         } catch (SQLException e) {
+            showAlert(Alert.AlertType.ERROR, "Database Error", "Error loading subjects: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
+    // Utility method to show alert dialogs
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
     // Inner class to represent each subject
     public static class Subject {
