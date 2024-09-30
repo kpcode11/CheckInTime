@@ -239,7 +239,7 @@
                         <Font name="Arial Black" size="12.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="categoryComboBox" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="293.0" style="-fx-background-color: #271352;" />
+                  <ComboBox fx:id="categoryComboBox" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="293.0" style="-fx-background-color: #271352; -fx-text-fill: white;" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="40.0" prefWidth="696.0" spacing="10.0">
@@ -282,11 +282,11 @@
                   <ComboBox fx:id="reminderComboBox" prefHeight="26.0" prefWidth="293.0" style="-fx-background-color: #271352;" />
                </children>
             </HBox>
-            <Button mnemonicParsing="false" onAction="#handleAddTask" style="-fx-background-color: #271352;" text="Add Task" textFill="WHITE">
+            <Button mnemonicParsing="false" onAction="#handleAddTask" style="-fx-background-color: #271352; -fx-background-radius: 15;" text="Add Task" textFill="WHITE">
                <font>
                   <Font name="Arial Black" size="12.0" />
                </font></Button>
-            <Button fx:id="showTasksButton" mnemonicParsing="false" onAction="#showTasks" style="-fx-background-color: #271352;" text="Show Tasks" textFill="WHITE">
+            <Button fx:id="showTasksButton" mnemonicParsing="false" onAction="#showTasks" style="-fx-background-color: #271352; -fx-background-radius: 15;" text="Show Tasks" textFill="WHITE">
                <VBox.margin>
                   <Insets top="7.0" />
                </VBox.margin>

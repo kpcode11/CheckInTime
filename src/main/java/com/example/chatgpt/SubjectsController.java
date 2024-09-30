@@ -1,11 +1,17 @@
 package com.example.chatgpt;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -180,6 +186,23 @@ public class SubjectsController {
 
         public int getMarks() {
             return marks;
+        }
+    }
+
+    @FXML
+    private void redirectToDashboard(ActionEvent event) {
+        try {
+            // Load the TaskManager FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Dashboard.fxml"));
+            Parent taskManagerRoot = loader.load();
+
+            // Get the current stage (window) and set the TaskManager scene
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.setScene(new Scene(taskManagerRoot));
+            currentStage.setTitle("Dashboard");
+            currentStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

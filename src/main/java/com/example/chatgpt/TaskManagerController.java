@@ -187,9 +187,24 @@ public class TaskManagerController {
             return;
         }
 
+        // Validate the date to ensure it is not in the past
+        if (taskDate.isBefore(LocalDate.now())) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Please select a valid future date for the task.");
+            return;
+        }
+
         // Validate the time input (HH:mm)
         try {
-            LocalTime.parse(taskTime, DateTimeFormatter.ofPattern("HH:mm"));
+            LocalTime selectedTime = LocalTime.parse(taskTime, DateTimeFormatter.ofPattern("HH:mm"));
+
+            // If the task date is today, ensure the time is in the future
+            if (taskDate.equals(LocalDate.now())) {
+                if (selectedTime.isBefore(LocalTime.now())) {
+                    showAlert(Alert.AlertType.ERROR, "Error", "Please select a time that is in the future.");
+                    return;
+                }
+            }
+
         } catch (Exception e) {
             showAlert(Alert.AlertType.ERROR, "Error", "Please enter a valid time (HH:mm).");
             return;
@@ -204,11 +219,11 @@ public class TaskManagerController {
         }
 
         // SQL query to insert task
-        String insertTaskQuery = "INSERT INTO tasks (username, task_name, category, task_date, task_time, reminder,priority) VALUES (?, ?, ?, ?, ?, ?,?)";
+        String insertTaskQuery = "INSERT INTO tasks (username, task_name, category, task_date, task_time, reminder, priority) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         // Execute database query
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement("INSERT INTO tasks (username, task_name, category, task_date, task_time, reminder,priority) VALUES (?, ?, ?, ?, ?, ?,?)")) {
+             PreparedStatement stmt = conn.prepareStatement(insertTaskQuery)) {
 
             // Set query parameters
             stmt.setString(1, loggedInUser);

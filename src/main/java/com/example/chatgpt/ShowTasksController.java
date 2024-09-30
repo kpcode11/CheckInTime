@@ -62,7 +62,7 @@ public class ShowTasksController {
                 rectangle.setFill(Color.YELLOW);  // Yellow for Medium priority
                 break;
             case "Low":
-                rectangle.setFill(Color.GREEN);  // Green for Low priority
+                rectangle.setFill(Color.LIGHTGREEN);  // Green for Low priority
                 break;
             default:
                 rectangle.setFill(Color.LIGHTGRAY);  // Default color

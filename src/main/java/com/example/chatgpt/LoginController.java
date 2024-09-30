@@ -115,14 +115,31 @@ public class LoginController {
         }
     }
 
+//    @FXML
+//    private void openSignUpPage() {
+//        try {
+//            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SignUp.fxml"));
+//            Parent root = fxmlLoader.load();
+//            Stage stage = new Stage();
+//            stage.setTitle("Sign Up");
+//            stage.setScene(new Scene(root));
+//            stage.show();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
     @FXML
-    private void openSignUpPage() {
+    private void openSignPage() {
         try {
+            // Load the Login FXML file
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SignUp.fxml"));
             Parent root = fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setTitle("Sign Up");
+
+            // Get the current stage (window) and set the new scene to the login page
+            Stage stage = (Stage) usernameField.getScene().getWindow();
             stage.setScene(new Scene(root));
+            stage.setTitle("SignUp Page");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

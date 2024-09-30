@@ -43,7 +43,10 @@
                   <Font name="Arial Black" size="12.0" />
                </font></TextField>
 
-                <Button onAction="#addSubject" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-padding: 8px 15px;" text="Add Subject" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <Button onAction="#addSubject" style="-fx-background-color: #27134f; -fx-text-fill: white; -fx-padding: 8px 15px; -fx-background-radius: 15;" text="Add Subject" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Arial Black" size="12.0" />
+               </font></Button>
             </children>
          <columnConstraints>
             <ColumnConstraints />
@@ -59,7 +62,10 @@
         <!-- Table or list to display subjects -->
         <VBox fx:id="subjectListContainer" alignment="CENTER" spacing="10" />
 
-        <Button onAction="#calculateResults" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-padding: 10px 20px;" text="Calculate Total Marks and Percentage" />
+        <Button onAction="#calculateResults" style="-fx-background-color: #27134f; -fx-text-fill: white; -fx-padding: 10px 20px; -fx-background-radius: 15;" text="Calculate Total Marks and Percentage">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font></Button>
 
         <!-- Display total marks and percentage -->
         <Label fx:id="totalMarksLabel" style="-fx-font-size: 14px; -fx-text-fill: #fff9ff;" text="Total Marks: ">
@@ -70,5 +76,13 @@
          <font>
             <Font name="Arial Black" size="12.0" />
          </font></Label>
+      <Button mnemonicParsing="false" onAction="#redirectToDashboard" style="-fx-background-color: #27134f; -fx-padding: 8px 15px; -fx-background-radius: 15; -fx-text-fill: white;" text="Back To Dashboard">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="14.0" />
+         </VBox.margin>
+      </Button>
     </children>
 </VBox>
