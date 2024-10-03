@@ -20,4 +20,7 @@
 
     <!-- Back to Dashboard Button -->
     <Button text="Back to Dashboard" onAction="#goBackToDashboard" />
+
+    <!-- Label for total attendance percentage -->
+    <Label fx:id="totalAttendanceLabel" text="Total Attendance: 0%" />
 </VBox>

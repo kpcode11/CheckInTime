@@ -30,19 +30,13 @@ public class AttendanceController {
         loadSubjectsForUser();
     }
 
-    // Method to handle the "Back to Dashboard" button click
     @FXML
     private void goBackToDashboard(ActionEvent event) {
         try {
-            // Load the Dashboard.fxml file
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/chatgpt/Dashboard.fxml"));
             Parent dashboardRoot = loader.load();
-
-            // Pass the logged-in user back to the dashboard if needed
             DashboardController dashboardController = loader.getController();
             dashboardController.setLoggedInUsername(loggedInUsername);
-
-            // Get the current stage and set the new scene for the dashboard
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             currentStage.setScene(new Scene(dashboardRoot));
             currentStage.setTitle("Dashboard");
@@ -61,11 +55,14 @@ public class AttendanceController {
     @FXML
     private VBox subjectList;
 
+    @FXML
+    private Label totalAttendanceLabel; // Define the label for total attendance
+
     private List<AttendanceSubject> subjects = new ArrayList<>();
 
     @FXML
     public void initialize() {
-        // This can be left empty or you can load existing subjects here
+        // Initialization logic can be added here if needed
     }
 
     @FXML
@@ -73,13 +70,11 @@ public class AttendanceController {
         String subjectName = subjectNameField.getText();
         String minPercentage = minPercentageField.getText();
 
-        // Check if fields are empty
         if (subjectName.isEmpty() || minPercentage.isEmpty()) {
             showAlert("Error", "Subject name and minimum percentage cannot be empty.");
             return;
         }
 
-        // Validate that the minimum percentage is a non-negative integer
         try {
             int minPercentageValue = Integer.parseInt(minPercentage);
             if (minPercentageValue < 0) {
@@ -91,30 +86,24 @@ public class AttendanceController {
             return;
         }
 
-        // Insert the subject into the database if validation passes
+        // Insert the subject into the database
         try (Connection conn = DatabaseConnection.getConnection()) {
             String sql = "INSERT INTO user_subjects (subject_name, min_percentage, username) VALUES (?, ?, ?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, subjectName);
             stmt.setString(2, minPercentage);
             stmt.setString(3, loggedInUsername);  // Store the logged-in user's username
-
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             showAlert("Error", "Failed to add subject to the database.");
         }
 
-        // Clear the fields after adding the subject
         subjectNameField.clear();
         minPercentageField.clear();
-
-        // Refresh the subject list after adding a new subject
-        loadSubjectsForUser();
+        loadSubjectsForUser(); // Refresh the subject list
     }
 
-
-    // Load the subjects for the logged-in user
     public void loadSubjectsForUser() {
         subjectList.getChildren().clear();  // Clear the current list
         subjects.clear(); // Clear the list of subjects
@@ -133,8 +122,6 @@ public class AttendanceController {
 
                 // Create an AttendanceSubject object for this subject
                 AttendanceSubject subject = new AttendanceSubject(subjectName, minPercentage);
-
-                // Calculate attendance for this subject
                 subject.calculateAttendancePercentage(); // Call to populate attended and totalClasses
                 subjects.add(subject); // Store the subject for later use
 
@@ -152,12 +139,14 @@ public class AttendanceController {
                     subject.markPresent();
                     storeAttendance(subject.getName(), true); // Store attendance record
                     attendancePercentageLabel.setText("Attendance: " + subject.getAttendancePercentage() + "%");
+                    updateTotalAttendancePercentage();  // Update total percentage when present is clicked
                 });
 
                 absentButton.setOnAction(e -> {
                     subject.markAbsent();
                     storeAttendance(subject.getName(), false); // Store attendance record
                     attendancePercentageLabel.setText("Attendance: " + subject.getAttendancePercentage() + "%");
+                    updateTotalAttendancePercentage();  // Update total percentage when absent is clicked
                 });
 
                 // Add all components to the subject row
@@ -169,14 +158,29 @@ public class AttendanceController {
             e.printStackTrace();
             showAlert("Error", "Failed to load subjects.");
         }
-    }
 
+        updateTotalAttendancePercentage(); // Calculate initial total percentage
+    }
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    // Method to update total attendance percentage
+    private void updateTotalAttendancePercentage() {
+        int totalAttended = 0;
+        int totalClasses = 0;
+
+        for (AttendanceSubject subject : subjects) {
+            totalAttended += subject.getAttended(); // Ensure this method exists
+            totalClasses += subject.getTotalClasses(); // Ensure this method exists
+        }
+
+        int totalPercentage = (totalClasses == 0) ? 0 : (totalAttended * 100) / totalClasses;
+        totalAttendanceLabel.setText("Total Attendance: " + totalPercentage + "%");
     }
 
     @FXML
@@ -284,6 +288,15 @@ public class AttendanceController {
         public int getAttendancePercentage() {
             if (totalClasses == 0) return 0;
             return (attended * 100) / totalClasses;
+        }
+
+        // Getter methods for attended and totalClasses
+        public int getAttended() {
+            return attended;
+        }
+
+        public int getTotalClasses() {
+            return totalClasses;
         }
     }
 }
