@@ -1,5 +1,6 @@
 package com.example.chatgpt;
 
+import javafx.scene.control.Button;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -115,7 +116,7 @@ public class AttendanceController {
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, loggedInUsername);  // Fetch subjects for the logged-in user
-            ResultSet rs = stmt.executeQuery();
+            ResultSet rs = stmt.executeQuery(); // Ensure this line executes correctly
 
             while (rs.next()) {
                 String subjectName = rs.getString("subject_name");
@@ -130,15 +131,25 @@ public class AttendanceController {
                 HBox subjectRow = new HBox(10);
                 subjectRow.setAlignment(Pos.CENTER_LEFT);
 
+                // Change font color of subject name label to white
                 Label subjectNameLabel = new Label(subject.getName() + " (Min: " + subject.getMinPercentage() + "%)");
+                subjectNameLabel.setTextFill(Color.WHITE); // Set font color to white
+
+                // Create buttons with specified background color and text color
                 Button presentButton = new Button("Present");
+                presentButton.setStyle("-fx-background-color: #281352; -fx-text-fill: white;"); // Set background color and text color
+
                 Button absentButton = new Button("Absent");
+                absentButton.setStyle("-fx-background-color: #281352; -fx-text-fill: white;"); // Set background color and text color
+
+                // Create attendance percentage label and set font color to white
                 Label attendancePercentageLabel = new Label("Attendance: " + subject.getAttendancePercentage() + "%");
+                attendancePercentageLabel.setTextFill(Color.WHITE); // Set font color to white
 
                 // Change font color based on attendance percentage
                 updateAttendanceLabelColor(attendancePercentageLabel, subject.getAttendancePercentage(), subject.getMinPercentage());
 
-                // Button actions
+                // Button actions remain the same
                 presentButton.setOnAction(e -> {
                     subject.markPresent();
                     storeAttendance(subject.getName(), true); // Store attendance record
@@ -162,11 +173,12 @@ public class AttendanceController {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            showAlert("Error", "Failed to load subjects.");
+            showAlert("Error", "Failed to load subjects."); // Handle SQL exception
         }
 
         updateTotalAttendancePercentage(); // Calculate initial total percentage
     }
+
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -192,7 +204,7 @@ public class AttendanceController {
         if (totalPercentage < 75) {
             totalAttendanceLabel.setTextFill(Color.RED);
         } else {
-            totalAttendanceLabel.setTextFill(Color.BLACK); // Reset color to black if above 75%
+            totalAttendanceLabel.setTextFill(Color.WHITE); // Reset color to black if above 75%
         }
     }
 
