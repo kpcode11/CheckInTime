@@ -73,11 +73,25 @@ public class AttendanceController {
         String subjectName = subjectNameField.getText();
         String minPercentage = minPercentageField.getText();
 
+        // Check if fields are empty
         if (subjectName.isEmpty() || minPercentage.isEmpty()) {
             showAlert("Error", "Subject name and minimum percentage cannot be empty.");
             return;
         }
 
+        // Validate that the minimum percentage is a non-negative integer
+        try {
+            int minPercentageValue = Integer.parseInt(minPercentage);
+            if (minPercentageValue < 0) {
+                showAlert("Error", "Minimum percentage cannot be negative.");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            showAlert("Error", "Please enter a valid number for the minimum percentage.");
+            return;
+        }
+
+        // Insert the subject into the database if validation passes
         try (Connection conn = DatabaseConnection.getConnection()) {
             String sql = "INSERT INTO user_subjects (subject_name, min_percentage, username) VALUES (?, ?, ?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -99,6 +113,7 @@ public class AttendanceController {
         loadSubjectsForUser();
     }
 
+
     // Load the subjects for the logged-in user
     public void loadSubjectsForUser() {
         subjectList.getChildren().clear();  // Clear the current list
@@ -118,6 +133,9 @@ public class AttendanceController {
 
                 // Create an AttendanceSubject object for this subject
                 AttendanceSubject subject = new AttendanceSubject(subjectName, minPercentage);
+
+                // Calculate attendance for this subject
+                subject.calculateAttendancePercentage(); // Call to populate attended and totalClasses
                 subjects.add(subject); // Store the subject for later use
 
                 // Create a UI element for the subject
@@ -132,11 +150,13 @@ public class AttendanceController {
                 // Button actions
                 presentButton.setOnAction(e -> {
                     subject.markPresent();
+                    storeAttendance(subject.getName(), true); // Store attendance record
                     attendancePercentageLabel.setText("Attendance: " + subject.getAttendancePercentage() + "%");
                 });
 
                 absentButton.setOnAction(e -> {
                     subject.markAbsent();
+                    storeAttendance(subject.getName(), false); // Store attendance record
                     attendancePercentageLabel.setText("Attendance: " + subject.getAttendancePercentage() + "%");
                 });
 
@@ -151,11 +171,63 @@ public class AttendanceController {
         }
     }
 
+
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    @FXML
+    private void refreshSubjectList() {
+        subjectList.getChildren().clear();  // Clear the list before re-populating
+
+        for (AttendanceSubject subject : subjects) {
+            HBox subjectRow = new HBox(10);
+            subjectRow.setAlignment(Pos.CENTER_LEFT);
+
+            Label subjectNameLabel = new Label(subject.getName() + " (Min: " + subject.getMinPercentage() + "%)");
+            Button presentButton = new Button("Present");
+            Button absentButton = new Button("Absent");
+
+            // Button actions
+            presentButton.setOnAction(e -> {
+                subject.markPresent();
+                storeAttendance(subject.getName(), true); // Store attendance record
+                refreshSubjectList();  // Refresh after marking
+            });
+
+            absentButton.setOnAction(e -> {
+                subject.markAbsent();
+                storeAttendance(subject.getName(), false); // Store attendance record
+                refreshSubjectList();  // Refresh after marking
+            });
+
+            // Display attendance percentage
+            Label attendancePercentageLabel = new Label("Attendance: " + subject.getAttendancePercentage() + "%");
+            subjectRow.getChildren().addAll(subjectNameLabel, presentButton, absentButton, attendancePercentageLabel);
+
+            subjectList.getChildren().add(subjectRow);  // Add each subject row to the list
+        }
+    }
+
+    // Method to store attendance in the database
+    private void storeAttendance(String subjectName, boolean attended) {
+        String query = "INSERT INTO attendance_records (username, subject_name, attended, date) VALUES (?, ?, ?, CURDATE())";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, loggedInUsername);
+            stmt.setString(2, subjectName);
+            stmt.setBoolean(3, attended);
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to record attendance.");
+        }
     }
 
     // Inner class to represent attendance details of a subject
@@ -170,6 +242,26 @@ public class AttendanceController {
             this.minPercentage = minPercentage;
             this.attended = 0;
             this.totalClasses = 0;
+        }
+
+        public void calculateAttendancePercentage() {
+            String query = "SELECT COUNT(*) as total, SUM(CASE WHEN attended THEN 1 ELSE 0 END) as attended FROM attendance_records WHERE username = ? AND subject_name = ?";
+
+            try (Connection conn = DatabaseConnection.getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(query)) {
+
+                stmt.setString(1, loggedInUsername);
+                stmt.setString(2, name); // name is the subject's name
+                ResultSet rs = stmt.executeQuery();
+
+                if (rs.next()) {
+                    totalClasses = rs.getInt("total");
+                    attended = rs.getInt("attended");
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
         public String getName() {
