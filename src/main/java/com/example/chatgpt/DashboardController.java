@@ -88,6 +88,7 @@ public class DashboardController {
             // You can pass the logged-in user information to the AttendanceController if needed
             AttendanceController attendanceController = loader.getController();
             attendanceController.setLoggedInUser(loggedInUsername); // Optional: Pass the logged-in username
+            attendanceController.loadSubjectsForUser(); // Load subjects after user logs in
 
             // Get the current stage (window) and set the new scene
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();

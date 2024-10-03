@@ -13,6 +13,10 @@ import javafx.geometry.Pos;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +26,8 @@ public class AttendanceController {
 
     public void setLoggedInUser(String username) {
         this.loggedInUsername = username;
-        // You can use this username to load specific attendance data for the logged-in user
+        // Load subjects when the user is set
+        loadSubjectsForUser();
     }
 
     // Method to handle the "Back to Dashboard" button click
@@ -60,56 +65,89 @@ public class AttendanceController {
 
     @FXML
     public void initialize() {
-        // Initialization logic if needed
+        // This can be left empty or you can load existing subjects here
     }
 
     @FXML
-    public void handleAddSubject() {
+    private void handleAddSubject() {
         String subjectName = subjectNameField.getText();
         String minPercentage = minPercentageField.getText();
 
-        if (!subjectName.isEmpty() && !minPercentage.isEmpty()) {
-            AttendanceSubject newSubject = new AttendanceSubject(subjectName, Integer.parseInt(minPercentage));
-            subjects.add(newSubject);  // Add the subject to the list
-
-            // Reset fields
-            subjectNameField.clear();
-            minPercentageField.clear();
-
-            // Refresh the subject list UI
-            refreshSubjectList();
-        } else {
-            showAlert("Error", "Please fill in both fields.");
+        if (subjectName.isEmpty() || minPercentage.isEmpty()) {
+            showAlert("Error", "Subject name and minimum percentage cannot be empty.");
+            return;
         }
+
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            String sql = "INSERT INTO user_subjects (subject_name, min_percentage, username) VALUES (?, ?, ?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, subjectName);
+            stmt.setString(2, minPercentage);
+            stmt.setString(3, loggedInUsername);  // Store the logged-in user's username
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to add subject to the database.");
+        }
+
+        // Clear the fields after adding the subject
+        subjectNameField.clear();
+        minPercentageField.clear();
+
+        // Refresh the subject list after adding a new subject
+        loadSubjectsForUser();
     }
 
-    private void refreshSubjectList() {
-        subjectList.getChildren().clear();  // Clear the list before re-populating
+    // Load the subjects for the logged-in user
+    public void loadSubjectsForUser() {
+        subjectList.getChildren().clear();  // Clear the current list
+        subjects.clear(); // Clear the list of subjects
 
-        for (AttendanceSubject subject : subjects) {
-            HBox subjectRow = new HBox(10);
-            subjectRow.setAlignment(Pos.CENTER_LEFT);
+        String query = "SELECT subject_name, min_percentage FROM user_subjects WHERE username = ?";
 
-            Label subjectNameLabel = new Label(subject.getName() + " (Min: " + subject.getMinPercentage() + "%)");
-            Button presentButton = new Button("Present");
-            Button absentButton = new Button("Absent");
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            // Button actions
-            presentButton.setOnAction(e -> {
-                subject.markPresent();
-                refreshSubjectList();  // Refresh after marking
-            });
+            stmt.setString(1, loggedInUsername);  // Fetch subjects for the logged-in user
+            ResultSet rs = stmt.executeQuery();
 
-            absentButton.setOnAction(e -> {
-                subject.markAbsent();
-                refreshSubjectList();  // Refresh after marking
-            });
+            while (rs.next()) {
+                String subjectName = rs.getString("subject_name");
+                int minPercentage = rs.getInt("min_percentage");
 
-            // Display attendance percentage
-            Label attendancePercentageLabel = new Label("Attendance: " + subject.getAttendancePercentage() + "%");
-            subjectRow.getChildren().addAll(subjectNameLabel, presentButton, absentButton, attendancePercentageLabel);
+                // Create an AttendanceSubject object for this subject
+                AttendanceSubject subject = new AttendanceSubject(subjectName, minPercentage);
+                subjects.add(subject); // Store the subject for later use
 
-            subjectList.getChildren().add(subjectRow);  // Add each subject row to the list
+                // Create a UI element for the subject
+                HBox subjectRow = new HBox(10);
+                subjectRow.setAlignment(Pos.CENTER_LEFT);
+
+                Label subjectNameLabel = new Label(subject.getName() + " (Min: " + subject.getMinPercentage() + "%)");
+                Button presentButton = new Button("Present");
+                Button absentButton = new Button("Absent");
+                Label attendancePercentageLabel = new Label("Attendance: " + subject.getAttendancePercentage() + "%");
+
+                // Button actions
+                presentButton.setOnAction(e -> {
+                    subject.markPresent();
+                    attendancePercentageLabel.setText("Attendance: " + subject.getAttendancePercentage() + "%");
+                });
+
+                absentButton.setOnAction(e -> {
+                    subject.markAbsent();
+                    attendancePercentageLabel.setText("Attendance: " + subject.getAttendancePercentage() + "%");
+                });
+
+                // Add all components to the subject row
+                subjectRow.getChildren().addAll(subjectNameLabel, presentButton, absentButton, attendancePercentageLabel);
+                subjectList.getChildren().add(subjectRow);  // Add the row to the VBox
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to load subjects.");
         }
     }
 
@@ -157,4 +195,3 @@ public class AttendanceController {
         }
     }
 }
-
