@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.geometry.Pos;
 import javafx.stage.Stage;
+import javafx.scene.paint.Color; // Import for color management
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -134,11 +135,15 @@ public class AttendanceController {
                 Button absentButton = new Button("Absent");
                 Label attendancePercentageLabel = new Label("Attendance: " + subject.getAttendancePercentage() + "%");
 
+                // Change font color based on attendance percentage
+                updateAttendanceLabelColor(attendancePercentageLabel, subject.getAttendancePercentage(), subject.getMinPercentage());
+
                 // Button actions
                 presentButton.setOnAction(e -> {
                     subject.markPresent();
                     storeAttendance(subject.getName(), true); // Store attendance record
                     attendancePercentageLabel.setText("Attendance: " + subject.getAttendancePercentage() + "%");
+                    updateAttendanceLabelColor(attendancePercentageLabel, subject.getAttendancePercentage(), subject.getMinPercentage());
                     updateTotalAttendancePercentage();  // Update total percentage when present is clicked
                 });
 
@@ -146,6 +151,7 @@ public class AttendanceController {
                     subject.markAbsent();
                     storeAttendance(subject.getName(), false); // Store attendance record
                     attendancePercentageLabel.setText("Attendance: " + subject.getAttendancePercentage() + "%");
+                    updateAttendanceLabelColor(attendancePercentageLabel, subject.getAttendancePercentage(), subject.getMinPercentage());
                     updateTotalAttendancePercentage();  // Update total percentage when absent is clicked
                 });
 
@@ -181,6 +187,13 @@ public class AttendanceController {
 
         int totalPercentage = (totalClasses == 0) ? 0 : (totalAttended * 100) / totalClasses;
         totalAttendanceLabel.setText("Total Attendance: " + totalPercentage + "%");
+
+        // Change total attendance label color if below 75%
+        if (totalPercentage < 75) {
+            totalAttendanceLabel.setTextFill(Color.RED);
+        } else {
+            totalAttendanceLabel.setTextFill(Color.BLACK); // Reset color to black if above 75%
+        }
     }
 
     @FXML
@@ -210,9 +223,20 @@ public class AttendanceController {
 
             // Display attendance percentage
             Label attendancePercentageLabel = new Label("Attendance: " + subject.getAttendancePercentage() + "%");
+            updateAttendanceLabelColor(attendancePercentageLabel, subject.getAttendancePercentage(), subject.getMinPercentage());
+
             subjectRow.getChildren().addAll(subjectNameLabel, presentButton, absentButton, attendancePercentageLabel);
 
             subjectList.getChildren().add(subjectRow);  // Add each subject row to the list
+        }
+    }
+
+    // Method to update label color based on attendance percentage
+    private void updateAttendanceLabelColor(Label attendanceLabel, int attendancePercentage, int minPercentage) {
+        if (attendancePercentage < minPercentage) {
+            attendanceLabel.setTextFill(Color.RED); // Change color to red
+        } else {
+            attendanceLabel.setTextFill(Color.BLACK); // Reset to black if above minimum
         }
     }
 
