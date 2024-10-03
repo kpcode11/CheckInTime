@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:controller="com.example.chatgpt.AttendanceController" xmlns:fx="http://javafx.com/fxml" spacing="20" alignment="TOP_CENTER" style="-fx-padding: 20;">
+    <!-- Title Label -->
+    <Label text="Attendance Tracker" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+
+    <!-- Add Subject Section -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <TextField fx:id="subjectNameField" promptText="Enter Subject Name" />
+        <TextField fx:id="minPercentageField" promptText="Min Attendance (%)" />
+        <Button text="Add Subject" onAction="#handleAddSubject" />
+    </HBox>
+
+    <!-- Subject List -->
+    <VBox fx:id="subjectList" style="-fx-border-color: black; -fx-border-width: 1px; -fx-padding: 10;" minHeight="300" />
+
+    <!-- Back to Dashboard Button -->
+    <Button text="Back to Dashboard" onAction="#goBackToDashboard" />
+</VBox>
