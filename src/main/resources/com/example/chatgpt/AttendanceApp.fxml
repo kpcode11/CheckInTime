@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" spacing="20" style="-fx-padding: 20; -fx-background-color: #140329;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/22" fx:controller="com.example.chatgpt.AttendanceController">
+<VBox alignment="TOP_CENTER" spacing="20" style="-fx-padding: 20; -fx-background-color: #140329;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.chatgpt.AttendanceController">
     <!-- Title Label -->
     <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Attendance Tracker" textFill="WHITE">
       <font>
@@ -31,7 +31,7 @@
     </HBox>
 
     <!-- Subject List -->
-    <VBox fx:id="subjectList" minHeight="300" style="-fx-border-color: black; -fx-border-width: 1px; -fx-padding: 10;" />
+    <VBox fx:id="subjectList" minHeight="300" spacing="10.0" style="-fx-border-color: black; -fx-border-width: 1px; -fx-padding: 40;" />
 
     <!-- Back to Dashboard Button -->
     <Button onAction="#goBackToDashboard" style="-fx-background-color: #281352; -fx-background-radius: 20;" text="Back to Dashboard" textFill="WHITE">

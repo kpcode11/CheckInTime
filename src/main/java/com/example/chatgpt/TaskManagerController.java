@@ -82,6 +82,31 @@ public class TaskManagerController {
         }
     }
 
+    @FXML
+    private Button attendanceButton;  // Declare the button for attendance
+
+    @FXML
+    private void goToAttendance() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/chatgpt/AttendanceApp.fxml")); // Replace with your attendance FXML file
+            Parent root = fxmlLoader.load();
+
+            // Get the controller for Attendance and pass the logged-in user
+            AttendanceController attendanceController = fxmlLoader.getController();
+            attendanceController.setLoggedInUser(loggedInUsername); // Pass the logged-in user
+
+            // Show the attendance page in the current window
+            Stage stage = (Stage) attendanceButton.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Attendance");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Navigation Error", "An error occurred while navigating to the Attendance page: " + e.getMessage());
+        }
+    }
+
+
 
     @FXML
     private Button homeButton;

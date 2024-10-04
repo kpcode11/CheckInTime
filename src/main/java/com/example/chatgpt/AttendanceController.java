@@ -137,10 +137,10 @@ public class AttendanceController {
 
                 // Create buttons with specified background color and text color
                 Button presentButton = new Button("Present");
-                presentButton.setStyle("-fx-background-color: #281352; -fx-text-fill: white;"); // Set background color and text color
+                presentButton.setStyle("-fx-background-color: #281352; -fx-text-fill: white; -fx-padding: 8px 15px; -fx-background-radius: 20px;"); // Set background color and text color
 
                 Button absentButton = new Button("Absent");
-                absentButton.setStyle("-fx-background-color: #281352; -fx-text-fill: white;"); // Set background color and text color
+                absentButton.setStyle("-fx-background-color: #281352; -fx-text-fill: white; -fx-padding: 8px 15px; -fx-background-radius: 20px;"); // Set background color and text color
 
                 // Create attendance percentage label and set font color to white
                 Label attendancePercentageLabel = new Label("Attendance: " + subject.getAttendancePercentage() + "%");
