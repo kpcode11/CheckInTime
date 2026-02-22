@@ -1,14 +1,4 @@
-package com.example.chatgpt;
-
-import com.example.chatgpt.DatabaseConnection;
-import com.example.chatgpt.LoginController;
-import javafx.collections.FXCollections;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.stage.Stage;
+package com.example.studentmanager;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -20,9 +10,20 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+import javafx.collections.FXCollections;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
+@SuppressWarnings("unused")
 public class TaskManagerController {
 
     private NotificationManager notificationManager;
@@ -88,7 +89,7 @@ public class TaskManagerController {
     @FXML
     private void goToAttendance() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/chatgpt/AttendanceApp.fxml")); // Replace with your attendance FXML file
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/studentmanager/AttendanceApp.fxml")); // Replace with your attendance FXML file
             Parent root = fxmlLoader.load();
 
             // Get the controller for Attendance and pass the logged-in user

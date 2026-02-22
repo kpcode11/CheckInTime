@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" spacing="20" style="-fx-padding: 20; -fx-background-color: #140329;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.chatgpt.AttendanceController">
+<VBox alignment="TOP_CENTER" spacing="20" style="-fx-padding: 20; -fx-background-color: #140329;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.studentmanager.AttendanceController">
     <!-- Title Label -->
     <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Attendance Tracker" textFill="WHITE">
       <font>

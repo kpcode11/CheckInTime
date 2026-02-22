@@ -1,4 +1,9 @@
-package com.example.chatgpt;
+package com.example.studentmanager;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,11 +14,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-
+@SuppressWarnings("unused")
 public class SignUpController {
 
     @FXML
@@ -25,7 +26,7 @@ public class SignUpController {
     private Connection connectDB() {
         String url = "jdbc:mysql://localhost:3306/userdb";
         String user = "root";
-        String password = "Kesh9136@";  // Replace with your MySQL password
+        String password = "kesh310509@#";  // Replace with your MySQL password
 
         Connection conn = null;
         try {

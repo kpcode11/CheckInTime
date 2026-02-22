@@ -1,4 +1,4 @@
-package com.example.chatgpt;
+package com.example.studentmanager;
 
 public class Subject {
     private String name;

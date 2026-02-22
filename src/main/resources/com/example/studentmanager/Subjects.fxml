@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="center" prefHeight="450" prefWidth="875" spacing="20" style="-fx-background-color: #130328;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.chatgpt.SubjectsController">
+<VBox alignment="center" prefHeight="450" prefWidth="875" spacing="20" style="-fx-background-color: #130328;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.studentmanager.SubjectsController">
 
     <children>
         <Label style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #fff9ff;" text="Add Subjects and Marks">
