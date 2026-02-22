@@ -2,7 +2,6 @@ package com.example.studentmanager;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 
 import javafx.fxml.FXML;
@@ -23,21 +22,6 @@ public class SignUpController {
     @FXML
     private PasswordField passwordField;
 
-    private Connection connectDB() {
-        String url = "jdbc:mysql://localhost:3306/userdb";
-        String user = "root";
-        String password = "kesh310509@#";  // Replace with your MySQL password
-
-        Connection conn = null;
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection(url, user, password);
-        } catch (Exception e) {
-            e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Database Error", "Unable to connect to the database: " + e.getMessage());
-        }
-        return conn;
-    }
 
     @FXML
     private void handleSignUp() {
@@ -52,7 +36,7 @@ public class SignUpController {
         // Insert into the database
         String insertQuery = "INSERT INTO users (username, password) VALUES (?, ?)";
 
-        try (Connection conn = connectDB();
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(insertQuery)) {
 
             stmt.setString(1, username);

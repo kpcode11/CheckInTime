@@ -2,7 +2,6 @@ package com.example.studentmanager;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -28,24 +27,9 @@ public class LoginController {
     @FXML
     private PasswordField passwordField;
 
-    private Connection connectDB() {
-        String url = "jdbc:mysql://localhost:3306/userdb";
-        String user = "root";
-        String password = "kesh310509@#";  // Replace with your MySQL password
-
-        Connection conn = null;
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection(url, user, password);
-        } catch (Exception e) {
-            e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Database Error", "Unable to connect to the database: " + e.getMessage());
-        }
-        return conn;
-    }
 
     public void testDatabaseConnection() {
-        try (Connection conn = connectDB()) {
+        try (Connection conn = DatabaseConnection.getConnection()) {
             if (conn != null) {
                 System.out.println("Database connection test successful!");
             } else {
@@ -69,7 +53,7 @@ public class LoginController {
         // Query to authenticate user
         String query = "SELECT * FROM users WHERE username = ? AND password = ?";
 
-        try (Connection conn = connectDB();
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, username);

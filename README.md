@@ -114,7 +114,22 @@ CREATE TABLE attendance_records (
 );
 ```
 
-Update the connection string in `DatabaseConnection.java` if necessary.
+Configure database credentials using environment variables rather than hard-coding them.
+By default the application reads the following variables:
+
+```text
+DB_URL   (e.g. jdbc:mysql://localhost:3306/userdb)
+DB_USER  (database username, default "root")
+DB_PASS  (database password)
+```
+
+You can set them in your shell prior to running, or create a `.env` file in the project root and load it via your preferred mechanism (e.g. using [dotenv-java](https://github.com/cdimascio/dotenv-java) or manually).  The `.gitignore` already excludes `.env` so your secrets stay out of version control.
+
+Credentials and URL are read from environment variables (`DB_URL`, `DB_USER`, `DB_PASS`).
+
+A sample file `.env.sample` is provided; copy it to `.env` and fill in your values. The `.env` file is ignored by Git.
+
+Update the connection string in `DatabaseConnection.java` only if you want to override these defaults.
 
 ---
 
