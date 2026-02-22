@@ -1,4 +1,13 @@
-package com.example.chatgpt;
+package com.example.studentmanager;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.example.studentmanager.LoginController.loggedInUsername;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,15 +22,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.example.chatgpt.LoginController.loggedInUsername;
-
+@SuppressWarnings("unused")
 public class SubjectsController {
 
     @FXML

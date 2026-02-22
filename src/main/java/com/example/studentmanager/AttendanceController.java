@@ -1,18 +1,4 @@
-package com.example.chatgpt;
-
-import javafx.scene.control.Button;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
-import javafx.scene.layout.HBox;
-import javafx.geometry.Pos;
-import javafx.stage.Stage;
-import javafx.scene.paint.Color; // Import for color management
+package com.example.studentmanager;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -22,6 +8,23 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Parent; // Import for color management
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+
+@SuppressWarnings("unused")
 public class AttendanceController {
 
     private String loggedInUsername;
@@ -35,7 +38,7 @@ public class AttendanceController {
     @FXML
     private void goBackToDashboard(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/chatgpt/Dashboard.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/studentmanager/Dashboard.fxml"));
             Parent dashboardRoot = loader.load();
             DashboardController dashboardController = loader.getController();
             dashboardController.setLoggedInUsername(loggedInUsername);

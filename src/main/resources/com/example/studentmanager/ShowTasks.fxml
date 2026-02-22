@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 
-<FlowPane fx:id="tasksContainer" alignment="CENTER" hgap="20.0" prefHeight="450.0" prefWidth="875.0" style="-fx-background-color: #f4f6f7; -fx-padding: 20;" vgap="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.chatgpt.ShowTasksController">
+<FlowPane fx:id="tasksContainer" alignment="CENTER" hgap="20.0" prefHeight="450.0" prefWidth="875.0" style="-fx-background-color: #f4f6f7; -fx-padding: 20;" vgap="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.studentmanager.ShowTasksController">
    <children>
       <!-- VBox to hold the Label and Task List -->
       <VBox alignment="CENTER" prefHeight="0.0" prefWidth="611.0" spacing="20.0" style="-fx-background-color: #ffffff; -fx-border-color: #dfe6e9; -fx-border-width: 2px; -fx-padding: 20; -fx-background-radius: 10; -fx-border-radius: 10;">

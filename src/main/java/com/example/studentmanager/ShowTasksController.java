@@ -1,6 +1,12 @@
-package com.example.chatgpt;
+package com.example.studentmanager;
 
-import javafx.event.ActionEvent;  // Correct import for JavaFX
+import java.sql.Connection;  // Correct import for JavaFX
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -13,12 +19,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
-
+@SuppressWarnings("unused")
 public class ShowTasksController {
 
     @FXML

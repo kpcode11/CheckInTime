@@ -1,4 +1,4 @@
-package com.example.chatgpt;
+package com.example.studentmanager;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,9 +6,10 @@ import java.sql.SQLException;
 
 public class DatabaseConnection {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/userdb"; // Replace with your DB URL
-    private static final String USER = "root"; // Replace with your DB username
-    private static final String PASSWORD = "Kesh9136@"; // Replace with your DB password
+    // credentials are read from environment variables for security
+    private static final String URL = System.getenv().getOrDefault("DB_URL", "jdbc:mysql://localhost:3306/userdb");
+    private static final String USER = System.getenv().getOrDefault("DB_USER", "root");
+    private static final String PASSWORD = System.getenv().getOrDefault("DB_PASS", "");
 
     public static Connection getConnection() throws SQLException {
         // Ensure that the MySQL JDBC driver is loaded
@@ -18,7 +19,7 @@ public class DatabaseConnection {
             throw new SQLException("Unable to load MySQL JDBC driver", e);
         }
 
-        // Establish and return the connection
+        // Establish and return the connection using environment values
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 }
