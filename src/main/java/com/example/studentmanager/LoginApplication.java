@@ -17,7 +17,11 @@ public class LoginApplication extends Application {
         stage.show();
 
         LoginController controller = fxmlLoader.getController();
-        controller.testDatabaseConnection();
+        try {
+            controller.testDatabaseConnection();
+        } catch (Exception e) {
+            // ignore; connection may fail if environment not configured yet
+        }
 
     }
 

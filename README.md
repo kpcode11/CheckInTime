@@ -129,11 +129,20 @@ Credentials and URL are read from environment variables (`DB_URL`, `DB_USER`, `D
 
 A sample file `.env.sample` is provided; copy it to `.env` and fill in your values. The `.env` file is ignored by Git.
 
+> **Important:** if these variables are not set (or `DB_PASS` is empty), the application will attempt to connect with no password and MySQL will deny access.  You will see an "Access denied for user 'root'@'localhost' (using password: NO)" error at startup or login.  Make sure to set the variables before running (e.g. `setx DB_PASS "yourpwd"` on Windows, or `export DB_PASS=yourpwd` on macOS/Linux) or copy `.env.sample` and edit.
+
 Update the connection string in `DatabaseConnection.java` only if you want to override these defaults.
 
 ---
 
 ## Building & Running
+
+### Troubleshooting
+
+* **Access denied using password: NO** – means DB_PASS was not provided. See above for setting environment variables.
+* **Password hashing not working?** Ensure you sign up new users; existing rows remain plain text.
+* **UI fails to start** – check terminal output for FXML or JDBC errors.
+
 
 Using the system Maven:
 
