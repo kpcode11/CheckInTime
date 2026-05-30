@@ -39,3 +39,4 @@ build/
 
 # local environment file containing secrets
 .env
+.env.local
