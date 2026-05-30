@@ -48,6 +48,7 @@ public class UserRepository {
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("Failed to save user: " + e.getMessage(), e);
         }
     }
 }

@@ -15,7 +15,7 @@ public class AuthService {
         if (optUser.isPresent()) {
             User user = optUser.get();
             if (PasswordUtil.verify(password, user.getPasswordHash())) {
-                SessionManager.getInstance().setLoggedInUser(username);
+                SessionManager.getInstance().setLoggedInUsername(username);
                 return true;
             }
         }

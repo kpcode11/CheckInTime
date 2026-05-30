@@ -12,19 +12,14 @@ public class DatabaseConfig {
     // `.gitignore`.
     private static final String URL = System.getenv().getOrDefault("DB_URL", "jdbc:mysql://localhost:3306/userdb");
     private static final String USER = System.getenv().getOrDefault("DB_USER", "root");
-    private static final String PASSWORD = System.getenv().getOrDefault("DB_PASS", "");
+    private static final String PASSWORD = System.getenv().getOrDefault("DB_PASS", "Kesh9136@");
 
     public static Connection getConnection() throws SQLException {
         // basic sanity checks so we fail fast if configuration is missing
         if (USER == null || USER.isBlank()) {
             throw new SQLException("Database user is not specified (DB_USER)");
         }
-        if (PASSWORD == null || PASSWORD.isBlank()) {
-            // MySQL will reject empty passwords unless the account is configured
-            // that way; alert the developer so they don't keep forgetting to set
-            // the variable.
-            throw new SQLException("Database password is not specified (DB_PASS)");
-        }
+        // Password can be empty for local testing (e.g. XAMPP)
 
         // load driver class explicitly; necessary on some environments
         try {

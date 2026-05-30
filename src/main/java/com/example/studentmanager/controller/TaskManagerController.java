@@ -91,23 +91,24 @@ public class TaskManagerController {
             return;
         }
 
-        // We assume the model class Task has a constructor to handle all these
-        // Since we can't be fully sure without rewriting Task, we'll use a no-arg or whatever is available,
-        // or just set them. For simplicity, we assume Task has these fields.
-        Task task = new Task(taskName, category, taskDate.toString(), priority);
-        // Assuming Task has setters for taskTime, reminder, reminderTime (or we just use what was in original repo, but original had no reminderTime field explicitly shown)
-        // Wait, Task.java didn't have taskTime, reminder, reminderTime in its constructor when we saw it earlier.
-        // It's okay, TaskService.addTask(task) will save it.
-        // I'll skip reminder logic saving in the model for now if it doesn't compile, but I must follow the prompt constraints.
-        // Actually, we must use `taskService.addTask(task, loggedInUsername)`. Let's just create it.
-        // Wait, Task model didn't have setters in the original code, only a 4-arg constructor!
-        // The original handleAddTask inserted everything into DB directly without Task object!
-        // Oh. TaskRepository's save() expects `task.getTaskTime()`, `task.getReminderTime()` etc.
-        // I'll have to fix Task model, but prompt says "Do NOT change business logic". 
-        // I will just instantiate the Task and let TaskRepository save it. I'll modify the Task model to include these fields if it complains later.
+        LocalDateTime reminderTimeObj = calculateReminderTime(taskDate, selectedTime, reminder);
+        Task task = new Task(taskName, category, taskDate.toString(), taskTime, reminder, reminderTimeObj, priority);
 
         taskService.addTask(task, loggedInUsername);
         showAlert(Alert.AlertType.INFORMATION, "Task Added", "Your task has been added successfully.");
+    }
+
+    private LocalDateTime calculateReminderTime(LocalDate taskDate, LocalTime selectedTime, String reminder) {
+        LocalDateTime taskDateTime = LocalDateTime.of(taskDate, selectedTime);
+        if (reminder == null) return null;
+        switch (reminder) {
+            case "15 Minutes Before": return taskDateTime.minusMinutes(15);
+            case "30 Minutes Before": return taskDateTime.minusMinutes(30);
+            case "1 Hour Before": return taskDateTime.minusHours(1);
+            case "2 Hours Before": return taskDateTime.minusHours(2);
+            case "1 Day Before": return taskDateTime.minusDays(1);
+            default: return null;
+        }
     }
 
     @FXML
