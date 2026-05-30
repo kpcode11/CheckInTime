@@ -1,10 +1,10 @@
-package com.example.studentmanager;
+package com.example.studentmanager.config;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DatabaseConnection {
+public class DatabaseConfig {
 
     // credentials are read from environment variables for security.  A local
     // `.env` file may be used during development (see README).  Do **not**

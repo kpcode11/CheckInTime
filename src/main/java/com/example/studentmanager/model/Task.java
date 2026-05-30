@@ -1,4 +1,4 @@
-package com.example.studentmanager;
+package com.example.studentmanager.model;
 
 public class Task {
     private String taskName;

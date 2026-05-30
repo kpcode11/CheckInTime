@@ -1,4 +1,8 @@
-package com.example.studentmanager;
+package com.example.studentmanager.util;
+
+import com.example.studentmanager.config.DatabaseConfig;
+
+import com.example.studentmanager.model.Task;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -42,7 +46,7 @@ public class NotificationManager {
         String query = "SELECT task_name, category, task_date, task_time, reminder, priority " +
                 "FROM tasks WHERE reminder_time <= ?";
 
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             // Set the current time as a parameter for the query

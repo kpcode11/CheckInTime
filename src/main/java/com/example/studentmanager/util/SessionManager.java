@@ -1,4 +1,4 @@
-package com.example.studentmanager;
+package com.example.studentmanager.util;
 
 public class SessionManager {
     private static SessionManager instance;
